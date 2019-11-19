@@ -26,6 +26,3 @@ class Listing_item(models.Model):
     properties = JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
-
