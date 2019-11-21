@@ -3,12 +3,9 @@ from django.http import JsonResponse
 def index(request):
     return HttpResponse("Hello from the property matching app")
 
-def partnerView(request):
+def partner_view(request):
     return HttpResponse("partner view")
 
 
 def form_match(request):
-    
-
-
-    return JsonResponse(data)
+    return HttpResponse("form view")
