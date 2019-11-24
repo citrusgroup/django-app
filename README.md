@@ -9,4 +9,4 @@ Install docker and docker-compose on your computer
 ### Run project
 
 Run ``` docker-compose up --build ``` from the root directory.
-You should now have a postgres database on port 5432 and a django web application on port 8000
+You should now have a postgres database on port 6432 and a django web application on port 8000
