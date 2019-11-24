@@ -16,7 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from propertymatching.models import User, UserForm
+from rest_framework import routers
+
+from propertymatching.view_sets import UserViewSet, UserFormViewSet, CompanyViewSet, AgentViewSet, ListingItemViewSet
+
+router = routers.DefaultRouter()
+router.register(r'api/v1/users', UserViewSet)
+router.register(r'api/v1/user-forms', UserFormViewSet)
+router.register(r'api/v1/companies', CompanyViewSet)
+router.register(r'api/v1/agents', AgentViewSet)
+router.register(r'api/v1/listing-items', ListingItemViewSet)
+
+# router.register(r'api/v1/type-form/register-form', TypeFormReceiverView)
+
 urlpatterns = [
-    path('property-matching/', include('propertymatching.urls')),
     path('admin/', admin.site.urls),
+    path(r'', include(router.urls)),
+    path(r'api/', include('rest_framework.urls', namespace='rest_framework'))
 ]

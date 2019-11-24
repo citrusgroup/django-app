@@ -25,6 +25,8 @@ class ListingItem(models.Model):
     monthly_cost = models.TextField(max_length=20)
     agent = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True)
     properties = JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 # User models
 class User(models.Model):
