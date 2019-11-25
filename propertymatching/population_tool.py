@@ -3,33 +3,67 @@ from propertymatching.models import Agent
 from propertymatching.models import Listing_item
 from faker import Faker
 
-fake = Faker()
-
 
 def main():
     
+    pop_randomiser()
+
 def pop_randomiser():
 
     data = {}
+    fake = Faker()
 
-    entries = input("enter number of entries to be written: ")
-    loops = range(int(entries))
-    seeds = fake.seeds(20)
+    fake.random.seed(5467)
 
-    fake.company()
-    for i in loops:
-        name_company = fake.company()
-        number_phone = fake.phone_number()
-        email_company = 
+    for i in range(1):
 
+        company = fake.company()
+        print("data line entry")
+        print("\n")
+        data[company] = {
+            'company_number': [fake.phone_number],
+            'company_email': [fake.company_email],
+            'agent_details': {}
+        }
 
-    for i in loops:
-        print(fake.name())
+        print("Company Form")
+        print(fake.company())
+        print(fake.phone_number())
+        print(fake.company_email())
+        print("\n")
+        
+        for j in range(1):
+            
+            agent = fake.name()
+            data[company]['agent_details'] = {
+                'agent_name': [agent],
+                'agent_number': [fake.phone_number()],
+                'agent_email': [fake.free_email()],
+                'listings': {}
+            }
+            print("Agent Form")
+            print(fake.name())
+            print(fake.phone_number())
+            print(fake.free_email())
 
+            for k in range(1):
+                
+                listing = fake.address()
 
+                data[company]['agent_datails']['listings'] = {
+
+                }
+
+                print("\n")
+                print("Listing Form")
+                print(fake.address())
+                print(fake.ean8())
+                print(fake.postalcode())
+                print(fake.words(nb=15, ext_word_list=None, unique=False))
+
+    return
 
 def populate(data):
-    seeds = 
     Listing_item.objects.create(listing_name='', price='', monthly_cost='', properties ='')
 
     Agent.objects.create(agent_name='', phone_number='', agent_email='')
