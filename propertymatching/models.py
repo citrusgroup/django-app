@@ -20,7 +20,7 @@ class Agent(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class ListingItem(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=150)
     price = models.TextField(max_length=20)
     monthly_cost = models.TextField(max_length=20)
     agent = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True)

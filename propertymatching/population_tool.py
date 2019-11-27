@@ -1,12 +1,12 @@
-from propertymatching.models import Company 
-from propertymatching.models import Agent
-from propertymatching.models import Listing_item
+from propertymatching.models import Company, Agent, ListingItem
 from faker import Faker
 
 
 def main():
     
-    pop_randomiser()
+    random_data = pop_randomiser()
+
+    populate_partnerform()(random_data)
 
 def pop_randomiser():
 
@@ -15,64 +15,64 @@ def pop_randomiser():
 
     fake.random.seed(5467)
 
-    for i in range(1):
+    for i in range(10):
 
         company = fake.company()
-        print("data line entry")
-        print("\n")
+        
         data[company] = {
-            'company_number': [fake.phone_number],
-            'company_email': [fake.company_email],
+            'company_number': fake.phone_number(),
+            'company_email': fake.company_email(),
             'agent_details': {}
         }
-
-        print("Company Form")
-        print(fake.company())
-        print(fake.phone_number())
-        print(fake.company_email())
-        print("\n")
         
-        for j in range(1):
+        for j in range(10):
             
             agent = fake.name()
-            data[company]['agent_details'] = {
-                'agent_name': [agent],
-                'agent_number': [fake.phone_number()],
-                'agent_email': [fake.free_email()],
+            data[company]['agent_details'][agent] = {
+                'agent_number': fake.phone_number(),
+                'agent_email': fake.free_email(),
                 'listings': {}
             }
-            print("Agent Form")
-            print(fake.name())
-            print(fake.phone_number())
-            print(fake.free_email())
 
-            for k in range(1):
+            for k in range(5):
                 
                 listing = fake.address()
 
-                data[company]['agent_datails']['listings'] = {
-
+                data[company]['agent_details'][agent]['listings'][listing] = {
+                    'price': fake.ean8(),
+                    'rent': fake.postalcode(),
+                    'properties': fake.words(nb=15, ext_word_list=None, unique=False)
                 }
 
-                print("\n")
-                print("Listing Form")
-                print(fake.address())
-                print(fake.ean8())
-                print(fake.postalcode())
-                print(fake.words(nb=15, ext_word_list=None, unique=False))
+    return data
 
-    return
+def populate_partnerform(data):
 
-def populate(data):
-    Listing_item.objects.create(listing_name='', price='', monthly_cost='', properties ='')
+    for company in data:
 
-    Agent.objects.create(agent_name='', phone_number='', agent_email='')
+        company_id = Company(name=company, phone_number=data[company]['company_number'], email=data[company]['company_email'])
+        
+        company_id.save()
 
-    Company.objects.create(company_name='', phone_number='', company_email='')
+        for agent in data[company]['agent_details']:
+            
+            agent_id = Agent(name=agent, phone_number=data[company]['agent_details'][agent]['agent_number'], 
+            email=data[company]['agent_details'][agent]['agent_email'], company=company_id)
+
+            agent_id.save()
+
+            for listing in data[company]['agent_details'][agent]['listings']:
+                
+                listing_id = ListingItem(name=listing, 
+                price=data[company]['agent_details'][agent]['listings'][listing]['price'],
+                monthly_cost=data[company]['agent_details'][agent]['listings'][listing]['rent'], agent=agent_id,
+                properties=data[company]['agent_details'][agent]['listings'][listing]['properties'])
+
+                listing_id.save()
     
     
 
-    return 'populated!'
+    return 'Partner Form populated!'
 
 if __name__ == "__main__":
     main()
