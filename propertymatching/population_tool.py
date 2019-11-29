@@ -1,4 +1,5 @@
 from propertymatching.models import Company, Agent, ListingItem, User, UserForm
+from django.contrib.postgres.search import SearchQuery
 from faker import Faker
 import random
 
