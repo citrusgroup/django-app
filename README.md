@@ -19,7 +19,7 @@ running ``` docker-compose up --build ```.
 Then in the terminal run the following:
 ```
 from propertymatching import population_tool
-population_tool.pop_randomiser.main()
+population_tool.main()
 ```
 
 if you want to run the individual functions within population_tool, add the extension, e.g. the following:
