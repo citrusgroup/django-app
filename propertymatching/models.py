@@ -30,6 +30,8 @@ class ListingItem(models.Model):
 
 # User models
 class User(models.Model):
+    hubspot_vid = models.IntegerField(null=True, unique=True)
+    hubspot_updated_at = models.DateTimeField(null=True, auto_now=False)
     name = models.CharField(max_length=100, null=True)
     phone_number = models.CharField(max_length=30, null=True)
     email = models.CharField(max_length=100)

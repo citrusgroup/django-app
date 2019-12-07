@@ -33,5 +33,6 @@ router.register(r'api/v1/listing-items', ListingItemViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'', include(router.urls)),
-    path(r'api/', include('rest_framework.urls', namespace='rest_framework'))
+    path(r'api/', include('rest_framework.urls', namespace='rest_framework')),
+    path('property-matching/', include('propertymatching.urls')),
 ]
