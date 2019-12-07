@@ -3,6 +3,12 @@ from django.contrib.postgres.search import SearchQuery
 from faker import Faker
 import random
 
+## property arrays for listings and user form ##
+real_estate_types = ['Apartment','House','Townhouse','Bungalow']
+apartment_level = ['ground_floor', 'top_level']
+area = ['costa_del_sol', 'Costa_del_Almeria', 'mallorca', 'costa_de_sur', 'barcelona']
+environment = ['beach', 'golf_club', 'night_life', 'city_centre', 'airport', 'family_friendly', 'shopping']
+
 
 def main():
     
@@ -44,20 +50,38 @@ def pop_randomiser():
             for k in range(5):
                 
                 listing = fake.address()
+                real_estates = fake.random_element(real_estate_types)
+                size = fake.random_int(min=50, max=60, step=1)
+                if 'Apartment' in real_estate_types:
+                    level = fake.random_element(apartment_level)
+                else:
+                    level = None
 
                 data[company]['agent_details'][agent]['listings'][listing] = {
                     'price': fake.ean8(),
                     'rent': fake.postalcode(),
-                    'properties': fake.words(nb=15, ext_word_list=None, unique=False)
-                }
+                    'properties': {'real_estate_type': real_estates, 'apartment_level': level, 'size': size,
+                    'area': fake.random_element(area), 'environment': fake.random_elements(elements=environment, unique=True),
+                    'balcony': fake.boolean(chance_of_getting_true=80), 'garden': fake.boolean(chance_of_getting_true=50), 
+                    'pool': fake.boolean(chance_of_getting_true=70), 'rent_out': fake.boolean(chance_of_getting_true=50)
+                }}
 
     fake.random.seed(5467)
 
     for i in range(20):
+        
+        real_estates = fake.random_elements(elements=real_estate_types, unique=True)
+        size = fake.random_int(min=50, max=60, step=1)
+
+        if 'Apartment' in real_estate_types:
+            level = fake.random_elements(elements=apartment_level, unique=True)
+        else:
+            level = None
 
         user_name = fake.name()
         budget = fake.ean8()
         upkeep = fake.postalcode()
+
         data_userform[user_name] = {
             'user_number': fake.phone_number(),
             'user_email': fake.free_email(),
@@ -65,9 +89,15 @@ def pop_randomiser():
             'budget_max': (float(budget)*1.2),
             'upkeep_min': (float(upkeep)*0.8),
             'upkeep_max': (float(upkeep)*1.2),
-            'properties': fake.words(nb=15, ext_word_list=None, unique=False)
-        }
+            'properties': {'real_estate_type': real_estates, 'apartment_level': level, 'size_min': (size*0.8),
+                    'size_max': (size*1.2), 'area': fake.random_elements(elements=area, unique=True), 
+                    'environment': fake.random_elements(elements=environment, unique=True),
+                    'balcony': fake.boolean(chance_of_getting_true=80), 'garden': fake.boolean(chance_of_getting_true=50), 
+                    'pool': fake.boolean(chance_of_getting_true=70), 'rent_out': fake.boolean(chance_of_getting_true=50)
+                }}
+
     return data, data_userform
+
 
 def populate_partnerform(data):
 
