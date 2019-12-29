@@ -61,7 +61,7 @@ def pop_randomiser():
                     'price': fake.ean8(),
                     'rent': fake.postalcode(),
                     'properties': {'real_estate_type': real_estates, 'apartment_level': level, 'size': size,
-                    'area': [fake.random_element(area)], 'environment': fake.random_elements(elements=environment, unique=True),
+                    'area': fake.random_element(area), 'environment': fake.random_elements(elements=environment, unique=True),
                     'balcony': fake.boolean(chance_of_getting_true=80), 'garden': fake.boolean(chance_of_getting_true=50), 
                     'pool': fake.boolean(chance_of_getting_true=70), 'rent_out': fake.boolean(chance_of_getting_true=50)
                 }}
