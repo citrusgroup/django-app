@@ -47,3 +47,8 @@ class UserForm(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 #Matching model
+class FormMatches(models.Model):
+    userform = models.ForeignKey(UserForm, on_delete=models.SET_NULL, null=True)
+    listing = models.ForeignKey(ListingItem, on_delete=models.SET_NULL, null=True)
+    email_sent = models.BooleanField(editable=True)
+    created_at = models.DateTimeField(auto_now_add=True)

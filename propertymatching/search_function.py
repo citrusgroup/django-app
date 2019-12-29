@@ -1,5 +1,5 @@
 from django.test import TestCase
-from propertymatching.models import Company, Agent, ListingItem, User, UserForm
+from propertymatching.models import Company, Agent, ListingItem, User, UserForm, FormMatches
 from django.db import connection
 
 
@@ -89,10 +89,14 @@ def matches(data_dict):
     return matching_dict
 def results2model(search_results):
 
+    for match in search_results:
+        form_match = FormMatches(email_sent=False, listing_id = search_results[match]['listing_id'], 
+        userform_id = search_results[match]['user_id'])
 
+        form_match.save()
 
-
-    return
+    print('results written!')
+    return 
 
 
 def queries():
