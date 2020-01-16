@@ -132,3 +132,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Mail chimp test API key
+#MAILCHIMP_API_KEY =f33b36d4750c8784af6e7f03758b848e-us4
