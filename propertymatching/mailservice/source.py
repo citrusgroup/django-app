@@ -12,11 +12,6 @@ def email_source():
             agent = source_agent(listing['agent_id'])
             company = source_company(agent['company_id'])
 
-            print('customer name: ', customer)
-            print('listing address: ', listing['listing_address'], listing['details']['area'])
-            print('agent name: ', agent['agent_name'])
-            print('Company: ', company['company'])
-
             email_reqs[match] = {
                 'customer': customer,
                 'listing': listing,
