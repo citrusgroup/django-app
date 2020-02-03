@@ -20,9 +20,9 @@ class Agent(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class ListingItem(models.Model):
-    name = models.CharField(max_length=50)
-    price = models.TextField(max_length=20)
-    monthly_cost = models.TextField(max_length=20)
+    name = models.CharField(max_length=150)
+    price = models.FloatField(null=True)
+    monthly_cost = models.FloatField(null=True)
     agent = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True)
     properties = JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -45,3 +45,10 @@ class UserForm(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+#Matching model
+class FormMatches(models.Model):
+    userform = models.ForeignKey(UserForm, on_delete=models.SET_NULL, null=True)
+    listing = models.ForeignKey(ListingItem, on_delete=models.SET_NULL, null=True)
+    email_sent = models.BooleanField(editable=True)
+    created_at = models.DateTimeField(auto_now_add=True)
