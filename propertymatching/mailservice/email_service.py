@@ -5,22 +5,24 @@ from propertymatching.mailservice import form_source
 
 def mail_exec():
 
+    match_data = form_source.email_source()
 
+    for match_no in match_data:
+        cust_mail = match_data[match_no]['customer']['email']
+        cust_name = match_data[match_no]['customer']['name']
 
-    emails = ['John.holmgren@tmrw.se', 'erikbostrom1@gmail.com', 'magnus.larsen@apoex.se']
-
-    for mail in emails:
         message = Mail(
-            from_email = 'sendgrid_email_test@example.com',
-            to_emails =mail,
-            subject= 'Hello from the Citrus Group Automated email service - please take a ticket',
-            html_content='<strong>locked and loaded, watch this space and get excited</strong>')
+            from_email = 'citrusgroup_testmail@example.com',
+            to_emails =cust_mail,
+            subject= 'Hello %s from the Citrus Group Automated email service - please take a ticket' %(cust_name),
+            html_content='<strong>hi locked and loaded, watch this space and get excited</strong>')
         print(os.environ.get('SENDGRID_API_KEY'))
         try:
-            sg = SendGridAPIClient(api_key='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')
+            #sg = SendGridAPIClient(api_key='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')
 
-            response = sg.send(message)
-            print(mail)
+            #response = sg.send(message)
+            print(cust_mail)
+            print(message)
             print(response.status_code)
             print(response.body)
             print(response.headers)
