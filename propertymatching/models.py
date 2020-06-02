@@ -52,3 +52,4 @@ class FormMatches(models.Model):
     listing = models.ForeignKey(ListingItem, on_delete=models.SET_NULL, null=True)
     email_sent = models.BooleanField(editable=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
